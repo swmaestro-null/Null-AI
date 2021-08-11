@@ -1,7 +1,7 @@
 import cv2, matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
-
+matplotlib.use('Agg')
 def edge_detect():
     pic = cv2.imread('./upload.png')
 
