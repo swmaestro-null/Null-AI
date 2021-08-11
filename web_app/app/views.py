@@ -13,7 +13,7 @@ def index():
         print(filename)
         f.save('./upload.png')
         upload_image(s3, './upload.png', UPLOAD_FLODER + filename)
-        edge_detect()
+        edge_detect('./upload.png')
         upload_image(s3, './result.png', RESULT_FLODER + filename)
 
         return render_template('index.html', fileupload=True, img_name=filename)
