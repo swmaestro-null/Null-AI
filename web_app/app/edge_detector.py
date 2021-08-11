@@ -1,9 +1,9 @@
 import cv2, matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
-
-def edge_detect():
-    pic = cv2.imread('./upload.png')
+matplotlib.use('Agg')
+def edge_detect(filename):
+    pic = cv2.imread(filename=filename)
 
     pic_preprocessed = cv2.cvtColor(cv2.GaussianBlur(pic, (7,7), 0), cv2.COLOR_BGR2GRAY)
     pic_edges = cv2.bitwise_not(cv2.Canny(pic_preprocessed, threshold1=20, threshold2=60))

@@ -1,5 +1,5 @@
 from flask import render_template, request
-from app.edge_detector import edge_detect
+from app.region_detector import region_detect_skimage
 from app.s3_connector import s3_connection, upload_image
 
 UPLOAD_FLODER = 'static/uploads/'
@@ -13,7 +13,7 @@ def index():
         print(filename)
         f.save('./upload.png')
         upload_image(s3, './upload.png', UPLOAD_FLODER + filename)
-        edge_detect()
+        region_detect_skimage('./upload.png')
         upload_image(s3, './result.png', RESULT_FLODER + filename)
 
         return render_template('index.html', fileupload=True, img_name=filename)
