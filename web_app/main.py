@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from app.painter import paint_s3_image
+from service.painter import paint_s3_image
 
 app = Flask(__name__)
 
