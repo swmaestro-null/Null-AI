@@ -3,3 +3,4 @@ __pycache__
 config
 result.png
 upload.png
+test/colorization_gan4/models_new/100-G.ckpt

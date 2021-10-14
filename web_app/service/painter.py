@@ -1,5 +1,7 @@
-from app.region_detector import region_detect_skimage
-from app.s3_connector import s3_connection, upload_image, download_image
+#from app.region_detector import region_detect_skimage
+#from app.s3_connector import s3_connection, upload_image, download_image
+from service.region_detector import region_detect_skimage
+from service.s3_connector import s3_connection, upload_image, download_image
 
 s3 = s3_connection()
 
