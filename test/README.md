@@ -4,8 +4,11 @@ This repository implements the paper ["Reference based Sketch Image Colorization
 
 ## Requirements
 * python3.6+
-* pytorch 1.6.0
+* pytorch 1.9.1+cu111
+* cuda 11.4
+* cudnn 8.2.4
 * others.
+
 
 ## Usage
 training a model
