@@ -6,9 +6,10 @@ app = Flask(__name__)
 @app.route('/paint', methods=['POST'])
 def paint():
     req = request.get_json()
-    upload_access_key = req["uploadAccessKey"]
+    upload_sketch_access_key = req["uploadSketchAccessKey"]
+    upload_color_access_key = req["uploadColorAccessKey"]
     result_access_key = req["resultAccessKey"]
-    is_success = paint_s3_image(upload_access_key, result_access_key)
+    is_success = paint_s3_image(upload_sketch_access_key, upload_color_access_key, result_access_key)
     if is_success:
         return jsonify({
             "message": "paint success",
