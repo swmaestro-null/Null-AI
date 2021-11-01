@@ -13,13 +13,13 @@ from danboo.segment import segment
 
 s3 = s3_connection()
 
-def paint_s3_image(upload_sketch_access_key, upload_color_access_key, result_access_key):
+
+def paint_s3_image(reference_access_key, sketch_access_key, result_access_key):
     try:
-        download_image(s3, './upload_sketch.png', upload_sketch_access_key)
-        download_image(s3, './upload_color.png', upload_color_access_key)
-
-        #region_detect_skimage('./upload.png')
-
+        # download image from s3
+        download_image(s3, './reference.png', reference_access_key)
+        download_image(s3, './sketch.png', sketch_access_key)
+        # do paint
         parser = argparse.ArgumentParser()
         parser.add_argument('--config', type=str, default='reference_gan/config.yml', help='specifies config yaml file')
         params = parser.parse_args()
@@ -29,18 +29,24 @@ def paint_s3_image(upload_sketch_access_key, upload_color_access_key, result_acc
             solver = Solver(config, get_loader(config))
             print('test start')
             solver.test()
-            print('test finish')
+          
         else:
             print("Please check your config yaml file")
       
-
         image = cv2.imread('reference_gan/colorization_gan4/results/gan_image.jpg')
         #image = cv2.imread('danboo/gan_result.png')
         skeleton, region, flatten = segment(image)
         cv2.imwrite('./result.png', flatten)
-        print('ok!')
 
-        upload_image(s3, './result.png', result_access_key)
-    except:
-        return False
-    return True
+        # upload result image to s3
+        resultUrl = upload_image(s3, './result.png', result_access_key)
+        return {
+            "resultUrl": resultUrl,
+            "success": True
+        }
+    except Exception as e:
+        print(e)
+        return {
+            "success": False
+        }
+

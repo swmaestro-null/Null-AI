@@ -17,6 +17,14 @@ def upload_image(s3, filepath, access_key):
         access_key,
         ExtraArgs={'ContentType': "application/png", 'ACL': "public-read"}
     )
+    url = s3.generate_presigned_url(
+        ClientMethod='get_object',
+        Params={
+            'Bucket': AWS_S3_BUCKET_NAME,
+            'Key': access_key
+        }
+    )
+    return url
 
 def download_image(s3, filepath, access_key):
     return s3.download_file(
