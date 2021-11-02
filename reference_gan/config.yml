@@ -53,7 +53,7 @@ TRAINING_CONFIG:
 
   # Directory
   IMG_DIR : 'data'
-  TRAIN_DIR : 'colorization_gan4'
+  TRAIN_DIR : '..\\reference_gan\\colorization_gan4'
   LOG_DIR : 'logs'
   SAMPLE_DIR : 'samples'
   RESULT_DIR : 'results'

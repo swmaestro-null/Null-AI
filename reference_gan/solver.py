@@ -5,6 +5,8 @@ import torch, gc
 import torch.nn as nn
 import glob
 import os.path as osp
+import sys
+sys.path.append("..\\reference_gan")
 
 from .model import Generator
 from .model import Discriminator
@@ -148,7 +150,7 @@ class Solver(object):
         #print(model)
         print(name)
         print("The number of parameters: {}".format(num_params))
-
+        #with open('..\\reference_gan\\' + os.path.join(self.train_dir,'model_arch.txt'), 'a') as fp:
         with open(os.path.join(self.train_dir,'model_arch.txt'), 'a') as fp:
             print(model, file=fp)
             print(name, file=fp)
@@ -408,9 +410,9 @@ class Solver(object):
         fid = 0
         test_img_dir = osp.join(self.config['TEST_CONFIG']['IMG_DIR'], self.config['TEST_CONFIG']['MODE'])
         #reference = Image.open(osp.join(test_img_dir, '{}_color.png'.format('00'))).convert('RGB')
-        reference = Image.open('./upload_color.png').convert('RGB')
+        reference = Image.open('./reference.png').convert('RGB')
         #sketch = Image.open(osp.join(test_img_dir, '{}_sketch.png'.format('00'))).convert('L')
-        sketch = Image.open( './upload_sketch.png').convert('L')
+        sketch = Image.open( './sketch.png').convert('L')
 
         if self.config['TRAINING_CONFIG']['DIST'] == 'uniform':
             noise = np.random.uniform(self.config['TRAINING_CONFIG']['A'], self.config['TRAINING_CONFIG']['B'], np.shape(reference))
@@ -469,7 +471,8 @@ class Solver(object):
             x_concat = torch.cat(image_report, dim=3)
             sample_path = os.path.join(self.test_dir, '{}-images{}.jpg'.format(00, '_test'))
             save_image(self.denorm(x_concat.data.cpu()), sample_path, nrow=1, padding=0)
-            save_image(self.denorm(fake_result.data.cpu()), 'colorization_gan4/results/gan_image.jpg', nrow=1, padding=0)
+            res_path = os.path.join(self.result_dir, 'gan_image.jpg')
+            save_image(self.denorm(fake_result.data.cpu()), res_path, nrow=1, padding=0)
             print('Saved real and fake images into {}...'.format(self.sample_dir))
     
         print('Testing is finished')
