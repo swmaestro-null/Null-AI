@@ -3,6 +3,8 @@ __pycache__
 config
 result.png
 upload.png
+sketch.png
+reference.png
 
 reference_gan/colorization_gan4/models/
 reference_gan/__pycache__/
